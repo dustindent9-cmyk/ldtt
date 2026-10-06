@@ -1,0 +1,75 @@
+{
+  "mode": "fake_heartbeat_peer",
+  "blocker_for_real_sitl": "docker not installed / not on PATH; sim_vehicle.py (ArduPilot SITL) not on PATH",
+  "observer_returncode": 0,
+  "peer_sent": [
+    "HEARTBEAT",
+    "GLOBAL_POSITION_INT",
+    "HEARTBEAT",
+    "GLOBAL_POSITION_INT",
+    "HEARTBEAT",
+    "GLOBAL_POSITION_INT",
+    "HEARTBEAT",
+    "GLOBAL_POSITION_INT",
+    "HEARTBEAT",
+    "GLOBAL_POSITION_INT",
+    "HEARTBEAT",
+    "GLOBAL_POSITION_INT"
+  ],
+  "stdout_has_heartbeat": true,
+  "stdout_has_global_pos": true,
+  "audit_events": [
+    "session",
+    "scope_grant",
+    "egress_opt_in",
+    "revocation_check",
+    "session"
+  ],
+  "proven": [
+    "received_HEARTBEAT",
+    "received_GLOBAL_POSITION_INT",
+    "revocation_check_ran",
+    "audit_session_written",
+    "audit_scope_grant",
+    "stream_setup_ran_observe_cmds_only",
+    "rate_limiter_constructed_via_main"
+  ],
+  "not_proven": [],
+  "audit_sample": [
+    {
+      "action": "start",
+      "connector_id": "org.ldtt.ref-mav-observer",
+      "event": "session",
+      "phase": "Phase 2",
+      "ts": "2026-10-06T08:45:03Z",
+      "version": "0.1.0"
+    },
+    {
+      "event": "scope_grant",
+      "scopes": [
+        "observe:telemetry"
+      ],
+      "ts": "2026-10-06T08:45:03Z"
+    },
+    {
+      "enabled": false,
+      "event": "egress_opt_in",
+      "ts": "2026-10-06T08:45:03Z"
+    },
+    {
+      "cosign_mode": "verified",
+      "event": "revocation_check",
+      "list_version": 1,
+      "outcome": "ok",
+      "ts": "2026-10-06T08:45:03Z",
+      "when": "startup"
+    },
+    {
+      "action": "stop",
+      "event": "session",
+      "reason": "operator",
+      "ts": "2026-10-06T08:45:03Z"
+    }
+  ],
+  "smoke_criteria_met": true
+}

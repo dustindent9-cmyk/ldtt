@@ -1,0 +1,35 @@
+name: publish-spec
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        required: true
+        type: string
+      zb64:
+        description: zlib-compressed base64 of file bytes
+        required: true
+        type: string
+      message:
+        required: true
+        type: string
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write file
+        env:
+          ZB64: ${{ inputs.zb64 }}
+          FPATH: ${{ inputs.path }}
+        run: |
+          mkdir -p "$(dirname "$FPATH")"
+          python3 -c "import os,base64,zlib,pathlib; pathlib.Path(os.environ['FPATH']).write_bytes(zlib.decompress(base64.b64decode(os.environ['ZB64'])))"
+      - name: Commit and push
+        run: |
+          git config user.name "ldtt-bot"
+          git config user.email "ldtt-bot@users.noreply.github.com"
+          git add "${{ inputs.path }}"
+          git diff --staged --quiet || git commit -m "${{ inputs.message }}"
+          git push

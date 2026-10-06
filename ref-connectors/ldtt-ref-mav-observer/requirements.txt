@@ -1,0 +1,5 @@
+# LDTT Phase 2 — ldtt-ref-mav-observer (Observe). Prefer install via pyproject.toml.
+pymavlink>=2.4.41
+PyYAML>=6.0
+jsonschema>=4.20
+pytest>=7.4

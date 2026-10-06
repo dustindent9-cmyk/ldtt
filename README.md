@@ -1,3 +1,5 @@
+> **Archived. Canonical LDTT repo: https://github.com/rockmed888-ship-it/ldtt**
+
 # Linked Drone Tool Trust (LDTT)
 
 Portable trust stamp for **drone software connectors**.

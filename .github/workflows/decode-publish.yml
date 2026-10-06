@@ -1,0 +1,31 @@
+name: decode-publish
+on:
+  push:
+    paths:
+      - 'publish-queue/**'
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode queued publishes
+        run: |
+          set -euo pipefail
+          git config user.name "ldtt-bot"
+          git config user.email "ldtt-bot@users.noreply.github.com"
+          shopt -s nullglob
+          for meta in publish-queue/*.meta.json; do
+            base=$(basename "$meta" .meta.json)
+            zb64="publish-queue/${base}.zb64"
+            test -f "$zb64"
+            path=$(python3 -c "import json; print(json.load(open('$meta'))['path'])")
+            message=$(python3 -c "import json; print(json.load(open('$meta'))['message'])")
+            mkdir -p "$(dirname "$path")"
+            python3 -c "import pathlib,base64,zlib; pathlib.Path('$path').write_bytes(zlib.decompress(base64.b64decode(pathlib.Path('$zb64').read_text())))"
+            git add "$path"
+            git rm -f "$meta" "$zb64"
+            git commit -m "$message" || true
+          done
+          git push
